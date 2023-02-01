@@ -3,13 +3,21 @@
   hosts: all
   become: yes
   tasks:
+#     - name: Install required packages
+#       apt:
+#         name: apache2
+# #           - apache2
+# #           - mysql-server
+# #           - php
+#         state: present
     - name: Install required packages
       apt:
-        name: apache2
-#           - apache2
-#           - mysql-server
-#           - php
-        state: present
+        name: "{{ item }}"
+        items:
+          - apache2
+          - mysql-server
+          - php
+      state: present
 
     - name: Start and enable Apache service
       service:
@@ -22,9 +30,9 @@
         src: /home/index.html
         dest: /var/www/html/
 
-#     - name: Start and enable MySQL service
-#       service:
-#         name: mysql
-#         state: started
-#         enabled: yes
+    - name: Start and enable MySQL service
+      service:
+        name: mysql
+        state: started
+        enabled: yes
 
