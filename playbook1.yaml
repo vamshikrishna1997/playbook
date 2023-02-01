@@ -3,22 +3,19 @@
   hosts: all
   become: yes
   tasks:
-#     - name: Install required packages
-#       apt:
-#         name: apache2
-# #           - apache2
-# #           - mysql-server
-# #           - php
-#         state: present
+
+    - name: apt-get update
+      shell: "apt update"
+
+
     - name: Install required packages
-      apt:
-        name: "{{ item }}"
-        state: present
-      with_items:
+      package:
+        name:
           - apache2
           - mysql-server
           - php
-     
+        state: present
+
     - name: Start and enable Apache service
       service:
         name: apache2
@@ -35,4 +32,5 @@
         name: mysql
         state: started
         enabled: yes
+
 
