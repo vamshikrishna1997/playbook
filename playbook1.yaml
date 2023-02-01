@@ -13,12 +13,12 @@
     - name: Install required packages
       apt:
         name: "{{ item }}"
+        state: present
         items:
           - apache2
           - mysql-server
           - php
-      state: present
-
+     
     - name: Start and enable Apache service
       service:
         name: apache2
