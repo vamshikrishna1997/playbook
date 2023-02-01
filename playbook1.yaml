@@ -14,7 +14,7 @@
       apt:
         name: "{{ item }}"
         state: present
-        items:
+        with_items:
           - apache2
           - mysql-server
           - php
