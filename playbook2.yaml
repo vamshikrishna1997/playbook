@@ -1,7 +1,7 @@
 ---
 
 - name: Install LAMP server
-  hosts: all
+  hosts: app
   become: yes
   tasks:
 
@@ -30,7 +30,7 @@
 
 
 - name: Install and configure MySQL
-  hosts: all
+  hosts: database
   become: yes
   vars:
     mysql_root_password: root123
