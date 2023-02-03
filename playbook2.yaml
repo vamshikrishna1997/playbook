@@ -1,0 +1,38 @@
+---
+- name: Install and configure MySQL
+  hosts: all
+  become: yes
+  vars:
+    mysql_root_password: root123
+    
+  
+  
+  tasks:
+  - name: Install MySQL packages
+    package:
+      name: mysql-server
+      state: present
+
+  - name: Start and enable the MySQL service
+    service:
+      name: mysql
+      state: started
+      enabled: yes
+
+  - name: Set the root password for MySQL
+    mysql_user:
+      name: root
+      password: "{{ mysql_root_password }}"
+      host: localhost
+      check_implicit_admin: yes
+
+  - name: Ensure root can connect from any host
+    mysql_user:
+      name: root
+      host: "%"
+      password: "{{ mysql_root_password }}"
+      priv: "*.*:ALL"
+      append_privs: yes
+
+  - name: Test connection
+    shell: "mysql -u root -p{{ mysql_root_password }} -e 'show databases;'"
